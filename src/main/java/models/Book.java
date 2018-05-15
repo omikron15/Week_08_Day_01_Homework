@@ -1,12 +1,16 @@
 package models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
 
     private int id;
     private String title;
-    private String author;
+    private Author author;
 
-    public Book(String title, String author) {
+    public Book(String title, Author author) {
         this.title = title;
         this.author = author;
     }
@@ -14,6 +18,9 @@ public class Book {
     public Book() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     public int getId() {
         return id;
     }
@@ -22,6 +29,7 @@ public class Book {
         this.id = id;
     }
 
+    @Column(name ="title")
     public String getTitle() {
         return title;
     }
@@ -30,11 +38,13 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 }
