@@ -28,6 +28,20 @@ public class DBAuthor {
         }
     }
 
+    public static void update(Author author){
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            transaction = session.beginTransaction();
+            session.update(author);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public static List<Author> getAuthors(){
         session = HibernateUtil.getSessionFactory().openSession();
         List<Author> results = null;
